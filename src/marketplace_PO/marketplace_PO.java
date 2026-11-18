@@ -6,7 +6,7 @@ public class marketplace_PO {
         // Aluno 4 (Igor) -> vai instanciar as listas para gerenciar os produtos disponíveis e etc
 
         // Aluno 5 (Gustavo) -> vai codar o menu de interação, tratamento de erros e etc (experiência de usuário)
-        System.out.println("A");
+        System.out.println("----------------------------------");
     }
 
 }
