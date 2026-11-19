@@ -20,7 +20,7 @@ public Produto (String nome, float preco, String departamento, String data_fabri
     this.data_fabricacao= data_fabricacao;
     this.desconto= desconto;
     this.cupom= cupom;
-    this.codigo_produto= cod_produto;
+    this.cod_produto= cod_produto;
 }
 
 public abstract float calcularPrecoFinal();
@@ -71,12 +71,12 @@ public abstract float calcularPrecoFinal();
     }
 
     public String getData_fab() {
-        return data_fabricacao;
+        return data_fab;
     }
 
     public void setData_fab(String data_fab) {
         if (nome != null)
-        this.data_fabricacao = data_fab;
+        this.data_fab = data_fab;
     }
 
     public int getDesconto() {
@@ -100,10 +100,10 @@ public abstract float calcularPrecoFinal();
     }
 
     public int getCod_prod() {
-        return codigo_produto;
+        return cod_prod;
     }
 
     public void setCod_prod(int cod_prod) {
-        this.codigo_produto = cod_prod;
+        this.cod_prod = cod_prod;
     }
 }
