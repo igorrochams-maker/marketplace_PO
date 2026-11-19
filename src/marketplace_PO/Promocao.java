@@ -1,8 +1,9 @@
 package marketplace_PO;
 
-// Aluno 1 (Maycon) -> Criação da interface "Promocao" que traz métodos relacionados a mecânica de cupons
+// interface de promocao, quem implementa Produto pode receber desconto
+// so tem o aplicarDesconto, o cupom ficou na interface Validavel
 public interface Promocao {
-    void aplicarDesconto(double percentual);
 
-    boolean validarCupom(String cod_cupom);
+    // recebe o percentual 
+    void aplicarDesconto(double percentual);
 }
