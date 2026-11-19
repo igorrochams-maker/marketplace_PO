@@ -27,8 +27,8 @@ public abstract class Produto implements Promocao {
     public abstract float calcularPrecoFinal();
 
     // da interface Promocao
-    // isso MUDA o preco do produto, nao usar pro cupom cupom e calculado no carrinho
-    //igor tem que implementar isso dentro do carrinho n é só copiar e colar 
+    // isso MUDA o preco do produto, nao usar pro cupom, cupom é calculado no carrinho
+    //igor tem que implementar isso dentro do carrinho n é só copiar e colar
     @Override
     public void aplicarDesconto(double percentual) {
         if (percentual <= 0 || percentual > 100) {

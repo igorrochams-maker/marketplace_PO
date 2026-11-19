@@ -42,7 +42,7 @@ public class Eletronico extends Produto {
         return mesesGarantia;
     }
 
-    // nao aceita negativo 0 = sem garantia extra
+    // nao aceita negativo / meses garantia = 0 -> sem garantia extra
     public final void setMesesGarantia(int mesesGarantia) {
         if (mesesGarantia < 0) {
             throw new IllegalArgumentException("Meses de garantia não pode ser negativo.");

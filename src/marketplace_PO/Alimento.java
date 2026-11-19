@@ -1,7 +1,7 @@
 package marketplace_PO;
 
 // Aluno 2/3 (Carlos) -> implementar as subclasses de acordo com suas peculiaridades
-// Alimentos devem ter atenção especial com: data de validade 
+// Alimentos devem ter atenção especial com: data de validade
 // Segundo o pedido da atividade, alimentos devem ficar mais baratos quanto mais perto ele estiver de vencer
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -40,12 +40,12 @@ public class Alimento extends Produto {
         return 0f;
     }
 
-    // sobrescreve o da mae polimorfismo
+    // sobrescreve o da mae -> Polimorfismo
     // vencido lanca excecao o menu tem q tratar com try/catch, senao aplica o desconto da validade
     @Override
     public float calcularPrecoFinal() {
         if (estaVencido()) {
-            throw new IllegalStateException("Produto vencido não pode ser vendido: " + getNome());
+            throw new IllegalStateException("O produto a seguir está vencido não pode ser vendido: " + getNome());
         }
         return getPreco() * (1 - percentualDescontoValidade());
     }
