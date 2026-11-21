@@ -36,6 +36,7 @@ public abstract class Produto implements Promocao {
         }
         this.preco -= this.preco * (float) (percentual / 100.0);
     }
+    
 
     // getters e setters
     // os setters sao final pq sao chamados no construtor

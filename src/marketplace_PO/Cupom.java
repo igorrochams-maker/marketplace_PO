@@ -11,11 +11,13 @@ public class Cupom implements Validavel {
 
     private String codigo;
     private int percentual; // 1 a 100
+    private String categoriaAlvo;
 
     // usa os setters pra ja validar na criacao
-    public Cupom(String codigo, int percentual) {
+    public Cupom(String codigo, int percentual, String categoriaAlvo) {
         setCodigo(codigo);
         setPercentual(percentual);
+        setCategoriaAlvo(categoriaAlvo);
     }
 
     // da da interface Validavel
@@ -23,6 +25,13 @@ public class Cupom implements Validavel {
     @Override
     public boolean validarCupom(String codigoDigitado) {
         return codigoDigitado != null && codigo.equalsIgnoreCase(codigoDigitado.trim());
+    }
+    
+    public String getCategoriaAlvo() {
+        return categoriaAlvo;
+    }
+    public void setCategoriaAlvo(String categoriaAlvo) {
+        this.categoriaAlvo = (categoriaAlvo != null) ? categoriaAlvo.trim().toUpperCase() : "TODOS";
     }
 
     public String getCodigo() {
