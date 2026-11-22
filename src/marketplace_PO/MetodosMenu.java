@@ -7,8 +7,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import marketplace_PO.Carrinho;
-
 public class MetodosMenu {
 
     private ArrayList<Produto> listaProdutos;
