@@ -7,6 +7,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import marketplace_PO.Carrinho;
+
 public class MetodosMenu {
 
     private ArrayList<Produto> listaProdutos;
@@ -43,6 +45,18 @@ public class MetodosMenu {
                 "Não existem produtos com código '0' ou menor."
             );
         }
+    }
+
+    public ArrayList<Produto> getListaProdutos() {
+        return this.listaProdutos;
+    }
+
+    public ArrayList<Cupom> getListaCupons() {
+        return this.listaCupons;
+    }
+
+    public Carrinho getCarrinho() {
+        return this.carrinho;
     }
 
     public void addCupomLista(Cupom cupomNovo) {
