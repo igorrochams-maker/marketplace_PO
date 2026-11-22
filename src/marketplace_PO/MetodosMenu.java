@@ -56,10 +56,11 @@ public class MetodosMenu {
     public void removerCupomLista(
         String codigo
     ) throws InvalidAlgorithmParameterException {
-        if (codigo.length() > 0) {
-            for (int i = 0; i < this.listaProdutos.size(); i++) {
-                if (this.listaCupons.get(i).getCodigo().equals(codigo)) {
+        if (codigo != null && codigo.length() > 0) {
+            for (int i = 0; i < this.listaCupons.size(); i++) {
+                if (this.listaCupons.get(i).getCodigo().equalsIgnoreCase(codigo.trim())) {
                     this.listaCupons.remove(i);
+                    return;
                 }
             }
         } else {
