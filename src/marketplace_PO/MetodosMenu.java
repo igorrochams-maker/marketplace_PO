@@ -159,6 +159,7 @@ public class MetodosMenu {
         System.out.println("( 2 ) Adicionar produto ao carrinho");
         System.out.println("( 3 ) Remover produto do carrinho");
         System.out.println("( 4 ) Checar carrinho de compras");
+        System.out.println("( 6 ) Aplicar cupom");
         System.out.println("( 5 ) Mostrar lista de cupons");
         System.out.println("( 7 ) Acessar a área da gestão");
         System.out.println("( 8 ) Sair");
@@ -281,19 +282,23 @@ public class MetodosMenu {
                 );
                 String cupomAplicar = scanner.nextLine();
 
+                boolean achou = false;
                 for (int i = 0; i < this.listaCupons.size(); i++) {
                     Cupom atual = this.listaCupons.get(i);
-                    if (atual.getCodigo() == cupomAplicar) {
+                    if (atual.validarCupom(cupomAplicar)) {
                         this.carrinho.aplicarCupom(atual);
                         System.out.println("O cupom foi aplicado com sucesso!");
-                        System.out.println(
-                            "Pressione qualquer tecla para voltar para o menu..."
-                        );
-                        scanner.nextLine();
-                        menuPadrao();
+                        achou = true;
                         break;
                     }
                 }
+                if (!achou) {
+                    System.out.println("Cupom inválido!");
+                }
+                
+                System.out.println("Pressione qualquer tecla para voltar para o menu...");
+                scanner.nextLine();
+                menuPadrao();
             }
             case 7 -> {
                 // mostrar menu de gestão
@@ -477,24 +482,28 @@ public class MetodosMenu {
                     "Digite o código do produto que deseja excluir: "
                 );
                 int codigoExcluir = scanner.nextInt();
+
+                boolean achou = false;
                 for (int i = 0; i < this.listaProdutos.size(); i++) {
                     Produto atual = this.listaProdutos.get(i);
                     if (atual.getCod_prod() == codigoExcluir) {
                         this.listaProdutos.remove(i);
                         System.out.println("O produto foi removido.");
-                        System.out.println(
-                            "----------------------------------"
-                        );
-                        System.out.println(
-                            "Pressione qualquer tecla para voltar para o menu..."
-                        );
-                        scanner.nextLine();
-                        menuGestao();
+                        achou = true;
                         break;
                     }
                 }
+                if (!achou) {
+                    System.out.println("Produto não encontrado!");
+                }
+                System.out.println("----------------------------------");
+                System.out.println("Pressione qualquer tecla para voltar para o menu...");
+                scanner.nextLine();
+                menuGestao();
                 break;
+                
             }
+                
             case 4 -> {
                 scanner.nextLine();
                 // tela pra adicionar cupom
@@ -542,25 +551,29 @@ public class MetodosMenu {
                     "Digite o nome do cupom que deseja excluir:"
                 );
                 String cupomExcluir = scanner.nextLine();
-
+                
+                boolean achou = false;
                 for (int i = 0; i < this.listaCupons.size(); i++) {
                     Cupom atual = this.listaCupons.get(i);
                     if (atual.getCodigo().equals(cupomExcluir)) {
                         this.listaCupons.remove(i);
                         System.out.println("Cupom removido com sucesso!");
-                        System.out.println(
-                            "----------------------------------"
-                        );
-                        System.out.println(
-                            "Pressione qualquer tecla para voltar para o menu..."
-                        );
-                        scanner.nextLine();
-                        menuGestao();
+                        achou = true;
                         break;
                     }
                 }
+                
+                if (!achou) {
+                    System.out.println("Cupom não encontrado!");
+                }
+                System.out.println("----------------------------------");
+                System.out.println("Pressione qualquer tecla para voltar para o menu...");
+                scanner.nextLine();
+                menuGestao()
                 break;
+                
             }
+                
             case 6 -> {
                 scanner.nextLine();
                 limparTela();
