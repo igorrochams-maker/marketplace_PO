@@ -2,6 +2,7 @@ package marketplace_PO;
 
 import org.junit.Before;
 import org.junit.Test;
+import java.time.LocalDate;
 import java.security.InvalidAlgorithmParameterException;
 import static org.junit.Assert.*;
 
@@ -16,8 +17,8 @@ public class MetodosMenuTest {
     @Before
     public void setUp() {
         menu = new MetodosMenu();
-        produto1 = new Eletronico("Notebook Dell", 2500.0f, "computadores", "15/10/2025", 0, 143, 12, "Dell");
-        produto2 = new Vestuario("Camisa Polo", 60.0f, "camisas", "23/01/2026", 0, 8237, "P", "seda");
+        produto1 = new Eletronico("Notebook Dell", 2500.0f, "computadores", LocalDate.of(2025, 10, 15), 0, 143, 12, "Dell");
+        produto2 = new Vestuario("Camisa Polo", 60.0f, "camisas", LocalDate.of(2026, 1, 23), 0, 8237, "P", "seda");
         cupom1 = new Cupom("DESCONTO15", 15);
         cupom2 = new Cupom("DESCONTO50", 50);
     }

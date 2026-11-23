@@ -12,7 +12,7 @@ public class Alimento extends Produto {
 
     private LocalDate dataValidade;
 
-    public Alimento(String nome, float preco, String departamento, String data_fabricacao,
+    public Alimento(String nome, float preco, String departamento, LocalDate data_fabricacao,
                     int desconto, int cod_produto,
                     LocalDate dataValidade) {
         super(nome, preco, departamento, data_fabricacao, desconto, cod_produto);
@@ -56,8 +56,12 @@ public class Alimento extends Produto {
 
     // nao aceita nulo
     public final void setDataValidade(LocalDate dataValidade) {
+        LocalDate hoje = LocalDate.now();
         if (dataValidade == null) {
             throw new IllegalArgumentException("Data de validade não pode ser nula.");
+        }
+        if(dataValidade.isBefore(hoje)) {
+            throw new IllegalArgumentException("Você não pode cadastrar um produto já vencido!");
         }
         this.dataValidade = dataValidade;
     }

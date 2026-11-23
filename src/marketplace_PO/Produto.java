@@ -1,5 +1,6 @@
 package marketplace_PO;
 
+import java.time.LocalDate;
 
 // obs: foi corrigida (nomes dos atributos batendo, cupom saiu e virou a classe Cupom)
 // todas as validacoes rejeitam nulo,vazio,negativo e lancam IllegalArgumentException
@@ -8,12 +9,12 @@ public abstract class Produto implements Promocao {
     private String nome;
     private float preco;
     private String departamento;
-    private String data_fab;
+    private LocalDate data_fab;
     protected int desconto;   // protected pras filhas poderem acessar
     protected int cod_prod;
 
     // construtor chama os setters, assim ja valida na criacao do objeto
-    public Produto(String nome, float preco, String departamento, String data_fab,
+    public Produto(String nome, float preco, String departamento, LocalDate data_fab,
                    int desconto, int cod_prod) {
         setNome(nome);
         setPreco(preco);
@@ -36,7 +37,7 @@ public abstract class Produto implements Promocao {
         }
         this.preco -= this.preco * (float) (percentual / 100.0);
     }
-    
+
 
     // getters e setters
     // os setters sao final pq sao chamados no construtor
@@ -77,15 +78,19 @@ public abstract class Produto implements Promocao {
         this.departamento = departamento.trim();
     }
 
-    public String getData_fab() {
+    public LocalDate getData_fab() {
         return data_fab;
     }
 
-    public final void setData_fab(String data_fab) {
-        if (data_fab == null || data_fab.trim().isEmpty()) {
-            throw new IllegalArgumentException("Data de fabricação não pode ser nula ou vazia.");
+    public final void setData_fab(LocalDate data_fab) {
+        LocalDate hoje = LocalDate.now();
+        if (data_fab == null) {
+            throw new IllegalArgumentException("Data de fabricação não pode ser nula.");
         }
-        this.data_fab = data_fab.trim();
+        if(data_fab.isAfter(hoje)) {
+            throw new IllegalArgumentException("O produto não pode ser sido fabricado depois de hoje.");
+        }
+        this.data_fab = data_fab;
     }
 
     public int getDesconto() {

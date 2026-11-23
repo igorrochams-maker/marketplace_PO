@@ -1,5 +1,7 @@
 package marketplace_PO;
 
+import java.time.LocalDate;
+
 // Aluno 2/3 (Carlos) -> implementar as subclasses de acordo com suas peculiaridades
 // Atenção especial para Eletrônicos -> Taxa de Garantia estendida
 // Ao pedir um eletrônico, deve-se ter a opção de escolher a garantia estendida que vai somar no valor também
@@ -14,7 +16,7 @@ public class Eletronico extends Produto {
     private static final float TAXA_GARANTIA_ANUAL = 0.10f;
 
     // repassa o que e do Produto pro super e valida o resto nos setters
-    public Eletronico(String nome, float preco, String departamento, String data_fabricacao,
+    public Eletronico(String nome, float preco, String departamento, LocalDate data_fabricacao,
                       int desconto, int cod_produto,
                       int mesesGarantia, String marca) {
         super(nome, preco, departamento, data_fabricacao, desconto, cod_produto);

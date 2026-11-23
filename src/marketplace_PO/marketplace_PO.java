@@ -1,5 +1,6 @@
 package marketplace_PO;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class marketplace_PO {
@@ -9,8 +10,8 @@ public class marketplace_PO {
         MetodosMenu menu = new MetodosMenu();
 
         // instanciando e adicionando produtos iniciais na lista de produtos
-        Eletronico Notebook = new Eletronico("Notebook Dell", 2500.0f, "computadores", "15/10/2025", 0, 143, 12, "Dell");
-        Vestuario CamisaPolo = new Vestuario("Camisa Polo", 60.0f, "camisas", "23/01/2026", 0, 8237, "P", "seda");
+        Eletronico Notebook = new Eletronico("Notebook Dell", 2500.0f, "computadores", LocalDate.of(2025, 10, 15), 0, 143, 12, "Dell");
+        Vestuario CamisaPolo = new Vestuario("Camisa Polo", 60.0f, "camisas", LocalDate.of(2026, 1, 23), 0, 8237, "P", "seda");
 
         menu.addProdutoLista(Notebook);
         menu.addProdutoLista(CamisaPolo);

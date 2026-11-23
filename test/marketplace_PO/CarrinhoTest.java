@@ -9,7 +9,7 @@ public class CarrinhoTest {
     @Test
     public void testAdicionarEObterProdutos() {
         Carrinho c = new Carrinho();
-        Eletronico e = new Eletronico("Fone", 200.0f, "Áudio", "01/01/2026", 0, 1, 0, "Sony");
+        Eletronico e = new Eletronico("Fone", 200.0f, "Áudio", LocalDate.of(2026, 1, 1), 0, 1, 0, "Sony");
         c.adicionarProduto(e);
 
         assertEquals(1, c.getQuantidadeItens());
@@ -26,14 +26,14 @@ public class CarrinhoTest {
     @Test(expected = IllegalStateException.class)
     public void testAdicionarAlimentoVencidoLancaExcecao() {
         Carrinho c = new Carrinho();
-        Alimento vencido = new Alimento("Iogurte", 5.0f, "Laticínios", "01/01/2026", 0, 2, LocalDate.now().minusDays(1));
+        Alimento vencido = new Alimento("Iogurte", 5.0f, "Laticínios", LocalDate.of(2026, 1, 1), 0, 2, LocalDate.now().minusDays(1));
         c.adicionarProduto(vencido);
     }
 
     @Test
     public void testAdicionarAlimentoValido() {
         Carrinho c = new Carrinho();
-        Alimento valido = new Alimento("Iogurte", 5.0f, "Laticínios", "01/01/2026", 0, 2, LocalDate.now().plusDays(5));
+        Alimento valido = new Alimento("Iogurte", 5.0f, "Laticínios", LocalDate.of(2026, 1, 1), 0, 2, LocalDate.now().plusDays(5));
         c.adicionarProduto(valido);
         assertEquals(1, c.getQuantidadeItens());
     }
@@ -41,7 +41,7 @@ public class CarrinhoTest {
     @Test
     public void testRemoverProdutoExistente() {
         Carrinho c = new Carrinho();
-        Eletronico e = new Eletronico("Fone", 200.0f, "Áudio", "01/01/2026", 0, 10, 0, "Sony");
+        Eletronico e = new Eletronico("Fone", 200.0f, "Áudio", LocalDate.of(2026, 1, 1), 0, 10, 0, "Sony");
         c.adicionarProduto(e);
 
         boolean removido = c.removerProduto(10);
@@ -52,7 +52,7 @@ public class CarrinhoTest {
     @Test
     public void testRemoverProdutoInexistente() {
         Carrinho c = new Carrinho();
-        Eletronico e = new Eletronico("Fone", 200.0f, "Áudio", "01/01/2026", 0, 10, 0, "Sony");
+        Eletronico e = new Eletronico("Fone", 200.0f, "Áudio", LocalDate.of(2026, 1, 1), 0, 10, 0, "Sony");
         c.adicionarProduto(e);
 
         boolean removido = c.removerProduto(999);
@@ -63,7 +63,7 @@ public class CarrinhoTest {
     @Test
     public void testEsvaziarCarrinho() {
         Carrinho c = new Carrinho();
-        c.adicionarProduto(new Eletronico("Fone", 200.0f, "Áudio", "01/01/2026", 0, 1, 0, "Sony"));
+        c.adicionarProduto(new Eletronico("Fone", 200.0f, "Áudio", LocalDate.of(2026, 1, 1), 0, 1, 0, "Sony"));
         c.aplicarCupom(new Cupom("DESC10", 10));
 
         c.esvaziarCarrinho();
@@ -93,9 +93,9 @@ public class CarrinhoTest {
     public void testCalcularSubtotalETotalFinalSemCupom() {
         Carrinho c = new Carrinho();
         // Eletronico: 1000 + 10% (12 meses) = 1100
-        Eletronico e = new Eletronico("Notebook", 1000.0f, "Informática", "01/01/2026", 0, 1, 12, "Dell");
+        Eletronico e = new Eletronico("Notebook", 1000.0f, "Informática", LocalDate.of(2026, 1, 1), 0, 1, 12, "Dell");
         // Vestuario: 100 + 5% (GG) = 105
-        Vestuario v = new Vestuario("Camisa", 100.0f, "Vestuário", "01/01/2026", 0, 2, "GG", "Algodão");
+        Vestuario v = new Vestuario("Camisa", 100.0f, "Vestuário", LocalDate.of(2026, 1, 1), 0, 2, "GG", "Algodão");
 
         c.adicionarProduto(e);
         c.adicionarProduto(v);
@@ -108,7 +108,7 @@ public class CarrinhoTest {
     @Test
     public void testCalcularTotalFinalComCupom() {
         Carrinho c = new Carrinho();
-        Vestuario v = new Vestuario("Camisa", 100.0f, "Vestuário", "01/01/2026", 0, 1, "M", "Algodão"); // 100.0
+        Vestuario v = new Vestuario("Camisa", 100.0f, "Vestuário", LocalDate.of(2026, 1, 1), 0, 1, "M", "Algodão"); // 100.0
         c.adicionarProduto(v);
 
         Cupom cupom = new Cupom("DESC15", 15);
@@ -134,7 +134,7 @@ public class CarrinhoTest {
         Carrinho c = new Carrinho();
         c.exibirCarrinho(); // Vazio
 
-        c.adicionarProduto(new Vestuario("Camisa", 100.0f, "Vestuário", "01/01/2026", 0, 1, "M", "Algodão"));
+        c.adicionarProduto(new Vestuario("Camisa", 100.0f, "Vestuário", LocalDate.of(2026, 1, 1), 0, 1, "M", "Algodão"));
         c.aplicarCupom(new Cupom("DESC10", 10));
         c.exibirCarrinho(); // Com itens e cupom
     }
