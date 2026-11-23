@@ -159,8 +159,8 @@ public class MetodosMenu {
         System.out.println("( 2 ) Adicionar produto ao carrinho");
         System.out.println("( 3 ) Remover produto do carrinho");
         System.out.println("( 4 ) Checar carrinho de compras");
-        System.out.println("( 6 ) Aplicar cupom");
         System.out.println("( 5 ) Mostrar lista de cupons");
+        System.out.println("( 6 ) Aplicar cupom");
         System.out.println("( 7 ) Acessar a área da gestão");
         System.out.println("( 8 ) Sair");
         System.out.println("----------------------------------");
@@ -210,10 +210,13 @@ public class MetodosMenu {
                     return;
                 }
                 
+                scanner.nextLine(); // limpa o enter do nextInt
+                boolean achou = false;
                 // checar aonde o código bate na lista de produtos
                 for (int i = 0; i < this.listaProdutos.size(); i++) {
                     Produto atual = this.listaProdutos.get(i);
                     if (atual.getCod_prod() == codProduto) {
+                        achou = true;
                         // adicionar no carrinho
                         try {
                             this.carrinho.adicionarProduto(atual);
@@ -221,18 +224,22 @@ public class MetodosMenu {
                         } catch (IllegalStateException e) {
                             System.out.println("Erro: " + e.getMessage()); // alimento vencido
                         }
-                        System.out.println(
-                            "----------------------------------"
-                        );
-                        System.out.println(
-                            "Pressione qualquer tecla para voltar para o menu..."
-                        );
-                        scanner.nextLine();
-                        menuPadrao();
                         break;
+                        
                     }
                 }
+                
+                if (!achou) {
+                System.out.println("Produto não encontrado!");
+                }
+                System.out.println("----------------------------------");
+                System.out.println("Pressione qualquer tecla para voltar para o menu...");
+                scanner.nextLine();
+                menuPadrao();
+                break;
+                
             }
+                
             case 3 -> {
                 limparTela();
                 // remover produto do carrinho
@@ -242,11 +249,23 @@ public class MetodosMenu {
                 System.out.println(
                     "Digite o Código do produto que deseja remover do carrinho:"
                 );
-                int codigoRemover = scanner.nextInt();
-                if (
-                    this.carrinho.removerProduto(codigoRemover) == true
-                ) menuPadrao();
+                int codigoRemover;
+                try {
+                    codigoRemover = scanner.nextInt();
+                } catch (InputMismatchException e) {
+                    scanner.nextLine();
+                    System.out.println("Digite apenas números.");
+                    menuPadrao();
+                    return;
+                }
+                
+                scanner.nextLine(); // limpa o enter do nextInt
+                this.carrinho.removerProduto(codigoRemover); // ja imprime se removeu ou nao achou
+                System.out.println("Pressione qualquer tecla para voltar para o menu...");
+                scanner.nextLine();
+                menuPadrao();
                 break;
+                
             }
             case 4 -> {
                 scanner.nextLine();
@@ -481,8 +500,21 @@ public class MetodosMenu {
                 System.out.println(
                     "Digite o código do produto que deseja excluir: "
                 );
-                int codigoExcluir = scanner.nextInt();
-
+                
+                int codigoExcluir;
+                
+                try {
+                    codigoExcluir = scanner.nextInt();
+                    
+                } catch (InputMismatchException e) {
+                    scanner.nextLine();
+                    System.out.println("Digite apenas números.");
+                    menuGestao();
+                    return;
+                    
+                }
+                scanner.nextLine(); // limpa o enter do nextInt
+                
                 boolean achou = false;
                 for (int i = 0; i < this.listaProdutos.size(); i++) {
                     Produto atual = this.listaProdutos.get(i);
@@ -531,8 +563,7 @@ public class MetodosMenu {
                     System.out.println("Erro: " + e.getMessage()); // percentual fora de 1 a 100
                 }
                 
-                this.listaCupons.add(novoCupom);
-                System.out.println("O cupom foi criado com sucesso!");
+               
                 System.out.println("----------------------------------");
                 System.out.println(
                     "Pressione qualquer tecla para voltar para o menu..."
@@ -569,7 +600,7 @@ public class MetodosMenu {
                 System.out.println("----------------------------------");
                 System.out.println("Pressione qualquer tecla para voltar para o menu...");
                 scanner.nextLine();
-                menuGestao()
+                menuGestao();
                 break;
                 
             }
