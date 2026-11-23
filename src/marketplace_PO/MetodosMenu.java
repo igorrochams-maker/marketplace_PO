@@ -6,6 +6,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.InputMismatchException;
+import java.time.format.DateTimeParseException;
 
 public class MetodosMenu {
 
@@ -165,7 +167,16 @@ public class MetodosMenu {
         // instânciando o scanner da resposta do usuário
         Scanner scanner = new Scanner(System.in);
 
-        int resposta = scanner.nextInt();
+        int resposta;
+        try {
+            resposta = scanner.nextInt();
+        } catch (InputMismatchException e) {
+            scanner.nextLine(); // limpa o que digitou
+            System.out.println("Digite apenas números.");
+            menuPadrao();
+            return;
+        }
+        
         switch (resposta) {
             case 1 -> {
                 limparTela();
@@ -187,16 +198,28 @@ public class MetodosMenu {
                 System.out.println(
                     "Digite o código do produto que deseja adicionar no carrinho:"
                 );
-                int codProduto = scanner.nextInt();
+                
+                int codProduto;
+                try {
+                    codProduto = scanner.nextInt();
+                } catch (InputMismatchException e) {
+                    scanner.nextLine();
+                    System.out.println("Digite apenas números.");
+                    menuPadrao(); // no menuGestao usa menuGestao()
+                    return;
+                }
+                
                 // checar aonde o código bate na lista de produtos
                 for (int i = 0; i < this.listaProdutos.size(); i++) {
                     Produto atual = this.listaProdutos.get(i);
                     if (atual.getCod_prod() == codProduto) {
                         // adicionar no carrinho
-                        this.carrinho.adicionarProduto(atual);
-                        System.out.println(
-                            "O produto foi adicionado com sucesso!"
-                        );
+                        try {
+                            this.carrinho.adicionarProduto(atual);
+                            System.out.println("O produto foi adicionado com sucesso!");
+                        } catch (IllegalStateException e) {
+                            System.out.println("Erro: " + e.getMessage()); // alimento vencido
+                        }
                         System.out.println(
                             "----------------------------------"
                         );
@@ -312,7 +335,15 @@ public class MetodosMenu {
 
         Scanner scanner = new Scanner(System.in);
 
-        int resposta = scanner.nextInt();
+        int resposta;
+        try {
+            resposta = scanner.nextInt();
+        } catch (InputMismatchException e) {
+            scanner.nextLine(); // limpa o que digitou
+            System.out.println("Digite apenas números.");
+            menuGestao();
+            return;
+        }
         switch (resposta) {
             case 1 -> {
                 scanner.nextLine();
@@ -326,104 +357,114 @@ public class MetodosMenu {
                 menuGestao();
                 break;
             }
-            case 2 -> {
+                case 2 -> {
                 // adicionar produto
                 limparTela();
                 scanner.nextLine();
-                System.out.println("Selecione a categoria do produto:");
-                System.out.println("( 1 ) Eletrônico");
-                System.out.println("( 2 ) Vestuário");
-                System.out.println("( 3 ) Alimento");
-                int categoria = scanner.nextInt();
-                limparTela();
-                scanner.nextLine();
-                System.out.println("Digite o nome do produto:");
-                String nome = scanner.nextLine();
-                System.out.println("Digite o preço do produto");
-                float preco = scanner.nextFloat();
-                scanner.nextLine();
-                System.out.println(
-                    "Digite o departamento (subcategoria) do produto:"
-                );
-                String departamento = scanner.nextLine();
-                System.out.println(
-                    "Informe a data de fabricação do produto no formato 'dia/mes/ano':"
-                );
-                String dataFabricacao = scanner.nextLine();
-                System.out.println("Informe o código do produto:");
-                int codProduto = scanner.nextInt();
+                try {
+                    System.out.println("Selecione a categoria do produto:");
+                    System.out.println("( 1 ) Eletrônico");
+                    System.out.println("( 2 ) Vestuário");
+                    System.out.println("( 3 ) Alimento");
+                    int categoria = scanner.nextInt();
+                    limparTela();
+                    scanner.nextLine();
+                    System.out.println("Digite o nome do produto:");
+                    String nome = scanner.nextLine();
+                    System.out.println("Digite o preço do produto");
+                    float preco = scanner.nextFloat();
+                    scanner.nextLine();
+                    System.out.println(
+                        "Digite o departamento (subcategoria) do produto:"
+                    );
+                    String departamento = scanner.nextLine();
+                    System.out.println(
+                        "Informe a data de fabricação do produto no formato 'dia/mes/ano':"
+                    );
+                    String dataFabricacao = scanner.nextLine();
+                    System.out.println("Informe o código do produto:");
+                    int codProduto = scanner.nextInt();
+                    scanner.nextLine(); // limpa o enter que sobrou do nextInt
 
-                if (categoria == 1) {
-                    System.out.println(
-                        "Digite quantos meses de garantia o produto irá possuir:"
-                    );
-                    int mesesGarantia = scanner.nextInt();
+                    if (categoria == 1) {
+                        System.out.println(
+                            "Digite quantos meses de garantia o produto irá possuir:"
+                        );
+                        int mesesGarantia = scanner.nextInt();
+                        scanner.nextLine();
+                        System.out.println("Digite a marca do eletrônico:");
+                        String marca = scanner.nextLine();
+                        Eletronico novoEletronico = new Eletronico(
+                            nome,
+                            preco,
+                            departamento,
+                            dataFabricacao,
+                            0,
+                            codProduto,
+                            mesesGarantia,
+                            marca
+                        );
+                        this.listaProdutos.add(novoEletronico);
+                        System.out.println("Produto cadastrado com sucesso!");
+                    } else if (categoria == 2) {
+                        System.out.println(
+                            "Digite o tamanho da roupa (P, M, G ou GG):"
+                        );
+                        String tamanhoRoupa = scanner.nextLine();
+                        System.out.println("Informe o tecido que compõe a roupa: ");
+                        String tecidoRoupa = scanner.nextLine();
+                        Vestuario novoVestuario = new Vestuario(
+                            nome,
+                            preco,
+                            departamento,
+                            dataFabricacao,
+                            0,
+                            codProduto,
+                            tamanhoRoupa,
+                            tecidoRoupa
+                        );
+                        this.listaProdutos.add(novoVestuario);
+                        System.out.println("Produto cadastrado com sucesso!");
+                    } else if (categoria == 3) {
+                        System.out.println(
+                            "Informe a data de validade do alimento no formato 'ano-mes-dia' ex: 2026-12-31:"
+                        );
+                        String dataValidadeString = scanner.nextLine();
+                        LocalDate dataValidade = LocalDate.parse(
+                            dataValidadeString.trim()
+                        );
+                        Alimento novoAlimento = new Alimento(
+                            nome,
+                            preco,
+                            departamento,
+                            dataFabricacao,
+                            0,
+                            codProduto,
+                            dataValidade
+                        );
+                        this.listaProdutos.add(novoAlimento);
+                        System.out.println("Produto cadastrado com sucesso!");
+                    } else {
+                        System.out.println("A categoria informada não existe!");
+                    }
+                } catch (InputMismatchException e) {
+                    // digitou letra onde era numero
                     scanner.nextLine();
-                    System.out.println("Digite a marca do eletrônico:");
-                    String marca = scanner.nextLine();
-                    Eletronico novoEletronico = new Eletronico(
-                        nome,
-                        preco,
-                        departamento,
-                        dataFabricacao,
-                        0,
-                        codProduto,
-                        mesesGarantia,
-                        marca
-                    );
-                    this.listaProdutos.add(novoEletronico);
-                    menuGestao();
-                } else if (categoria == 2) {
+                    System.out.println("Erro: digite um número válido.");
+                } catch (IllegalArgumentException e) {
+                    // preco negativo, nome vazio, tamanho invalido etc
+                    System.out.println("Erro: " + e.getMessage());
+                } catch (DateTimeParseException e) {
                     System.out.println(
-                        "Digite o tamanho da roupa (P, M, G ou GG):"
+                        "Erro: data inválida, use o formato 2026-12-31"
                     );
-                    String tamanhoRoupa = scanner.nextLine();
-                    System.out.println("Informe o tecido que compõe a roupa: ");
-                    String tecidoRoupa = scanner.nextLine();
-                    Vestuario novoVestuario = new Vestuario(
-                        nome,
-                        preco,
-                        departamento,
-                        dataFabricacao,
-                        0,
-                        codProduto,
-                        tamanhoRoupa,
-                        tecidoRoupa
-                    );
-                    this.listaProdutos.add(novoVestuario);
-                    menuGestao();
-                } else if (categoria == 3) {
-                    System.out.println(
-                        "Informe a data de validade do alimento no formato 'ano/mes/dia':"
-                    );
-                    String dataValidadeString = scanner.nextLine();
-                    LocalDate dataValidade = LocalDate.parse(
-                        dataValidadeString
-                    );
-                    DateTimeFormatter formatador = DateTimeFormatter.ofPattern(
-                        "dd/MM/yyyy"
-                    );
-                    dataValidade.format(formatador);
-                    Alimento novoAlimento = new Alimento(
-                        nome,
-                        preco,
-                        departamento,
-                        dataFabricacao,
-                        0,
-                        codProduto,
-                        dataValidade
-                    );
-                    this.listaProdutos.add(novoAlimento);
-                    menuGestao();
-                } else {
-                    System.out.println("A categoria informada não existe!");
-                    System.out.println("----------------------------------");
-                    System.out.println(
-                        "Pressione qualquer tecla para voltar para o menu..."
-                    );
-                    scanner.nextLine();
-                    menuPadrao();
                 }
+                System.out.println("----------------------------------");
+                System.out.println(
+                    "Pressione qualquer tecla para voltar para o menu..."
+                );
+                scanner.nextLine();
+                menuGestao();
                 break;
             }
             case 3 -> {
@@ -467,9 +508,20 @@ public class MetodosMenu {
                 System.out.println(
                     "Digite o valor (em %) que deseja que o cupom aplique:"
                 );
-                int valorCupom = scanner.nextInt();
-                scanner.nextLine();
-                Cupom novoCupom = new Cupom(codigoCupom, valorCupom);
+                
+                try {
+                    int valorCupom = scanner.nextInt();
+                    scanner.nextLine();
+                    Cupom novoCupom = new Cupom(codigoCupom, valorCupom);
+                    this.listaCupons.add(novoCupom);
+                    System.out.println("O cupom foi criado com sucesso!");
+                } catch (InputMismatchException e) {
+                    scanner.nextLine();
+                    System.out.println("Erro: digite um número válido.");
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Erro: " + e.getMessage()); // percentual fora de 1 a 100
+                }
+                
                 this.listaCupons.add(novoCupom);
                 System.out.println("O cupom foi criado com sucesso!");
                 System.out.println("----------------------------------");
